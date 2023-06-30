@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,5 +16,15 @@
     "mongodb": "4.1",
     "mongoose": "^7.3.1",
     "morgan": "^1.10.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alyssaleanne98/mern-people-practice-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alyssaleanne98/mern-people-practice-backend/issues"
+  },
+  "homepage": "https://github.com/alyssaleanne98/mern-people-practice-backend#readme",
+  "description": ""
 }
