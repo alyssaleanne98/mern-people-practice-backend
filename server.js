@@ -9,6 +9,7 @@ require("dotenv").config()
 const { PORT, DATABASE_URL} = process.env 
 const express = require("express")
 const app = express() // extra step to be explicit 
+const mongoose = require("mongoose")
 
 
 // ROUTES 
@@ -20,7 +21,14 @@ app.get("/", (req, res) => {
     res.send("hello world")
 })
 
+// Database Connections
+mongoose.connect(DATABASE_URL)
 
+// Connection msgs
+mongoose.connection
+    .on("open", () => { console.log("You are connected to mongodb")})
+    .on("close", () => { console.log("You are disconnected")})
+    .on("error", (error) => { console.log(error)})
 
 
 

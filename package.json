@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alyssa Cervantes",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,7 +17,9 @@
     "mongoose": "^7.3.1",
     "morgan": "^1.10.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alyssaleanne98/mern-people-practice-backend.git"
