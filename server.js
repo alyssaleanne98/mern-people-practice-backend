@@ -30,28 +30,49 @@ const PeopleSchema = new mongoose.Schema({
     image: String,
     title: String   
 })
-// we are collecting info about ppl we work with (name, img, title)
+// Model: what info would we like to collect from our people? (name, img, title)
 const People = mongoose.model("People", PeopleSchema)
 
-// ROUTES - INDUCES (the backend only consists of Index, Delete, Update, Create)
+// ROUTES - IDUC (this backend only consists of Index, Delete, Update, Create)
 // In express, all methods (get, post, put, delete) take 2 things an HTTP takes: a path "/" and a call back function ()
 // A callback function refers to a function that is passed as an argument to another function and is called back to a specific point during the execution of that function.
 // Callback functions are often used to handle HTTP requests and responses. When a request is made to a specific route or endpoint, Express invokes the associated callback function to process the request and generate a response
 
+// this is our test route 
 app.get("/", (req, res) => {
     res.send("hello world")
 })
-// this is our test route 
 
-// Index route (to get all of our people)
-app.get("/people", (req, res) => {
-    res.send("/people - index route")
+
+// INDEX route (to get all of our people)
+// we THEN add our Try/Catch method
+app.get("/people", async (req, res) => {
+    try {
+       res.status(200).json( await People.find({}))
+    } catch (error) {
+        res.status(400).json(error)
+    }
 })
 
-// Create 
+// CREATE (create route is typically in a form format where we are submitting something)
 app.post("/people", (req, res) => {
     res.send("/people - create route")
 })
+
+// Getting Data - Async Await & Try Catch 
+
+//We know that making a request for data isn't instant and must be handled asyncronously. The PROMISE object represents the eventual completion (or failure) of an async operation and its resulting value. 
+// Promise is in one of these states: 
+    // pending: initial state, neither fulfilled nor rejected 
+    // fulfilled: meaning that the operation was completed successfully.
+    // rejected: meaning that the operation failed
+
+// Potential interview question: What are they ways that you can consume a promise? 
+// Async await method: 
+app.get("/people", async (req, res) =>{
+
+})
+
 
 
 
