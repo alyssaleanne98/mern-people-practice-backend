@@ -40,6 +40,7 @@ const People = mongoose.model("People", PeopleSchema)
 app.use(cors()) // prevents cross origin resource sharing error, allows access to servers across all origins 
 app.use(morgan("dev")) // logs details of all server hits to terminal 
 app.use(express.json()) // parse json bodies from request 
+app.use(express.urlencoded({ extended: false })); // to use URL in postman 
 
 // ROUTES - IDUC (this backend only consists of Index, Delete, Update, Create)
 // In express, all methods (get, post, put, delete) take 2 things an HTTP takes: a path "/" and a call back function ()
@@ -71,6 +72,27 @@ app.post("/people", async (req, res) => {
         res.status(400).json(error) //you can implement different types of status codes.
     }
 })
+
+// DELETE 
+app.delete("/people/:id", async (req, res) => {
+    try {
+        res.status(200).json(await People.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+
+// UPDATE
+app.update("/people/:id", async (req, res) => {
+    try {
+        res.status(200).json(await People.findByIdAndUpdate(req.params.id, req.body, { new: true })); //this method takes the ID and req.body updates the info
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+
 
 // Getting Data - Async Await & Try Catch 
 
