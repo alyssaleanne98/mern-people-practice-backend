@@ -10,6 +10,8 @@ const { PORT, DATABASE_URL} = process.env
 const express = require("express")
 const app = express() // extra step to be explicit 
 const mongoose = require("mongoose")
+const morgan = require("morgan")
+const cors = require("cors")
 
 
 
@@ -33,6 +35,12 @@ const PeopleSchema = new mongoose.Schema({
 // Model: what info would we like to collect from our people? (name, img, title)
 const People = mongoose.model("People", PeopleSchema)
 
+// MIDDELWARE 
+// we need cors, morgan, and express json 
+app.use(cors()) // prevents cross origin resource sharing error, allows access to servers across all origins 
+app.use(morgan("dev")) // logs details of all server hits to terminal 
+app.use(express.json()) // parse json bodies from request 
+
 // ROUTES - IDUC (this backend only consists of Index, Delete, Update, Create)
 // In express, all methods (get, post, put, delete) take 2 things an HTTP takes: a path "/" and a call back function ()
 // A callback function refers to a function that is passed as an argument to another function and is called back to a specific point during the execution of that function.
@@ -55,8 +63,13 @@ app.get("/people", async (req, res) => {
 })
 
 // CREATE (create route is typically in a form format where we are submitting something)
-app.post("/people", (req, res) => {
-    res.send("/people - create route")
+app.post("/people", async (req, res) => {
+    try {
+        // req.body is used to to submit form of new people. This returns a copy of the object that was copied in the database.
+        res.status(200).json(await People.create(req.body));
+    } catch (error) {
+        res.status(400).json(error) //you can implement different types of status codes.
+    }
 })
 
 // Getting Data - Async Await & Try Catch 
