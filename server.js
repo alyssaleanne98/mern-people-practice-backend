@@ -11,12 +11,12 @@ const express = require("express")
 const app = express() // extra step to be explicit 
 const mongoose = require("mongoose")
 const morgan = require("morgan")
-const cors = require("cors")
+const cors = require("cors") 
 
 
 
 
-// Database Connections
+// Establish database Connections
 mongoose.connect(DATABASE_URL)
 
 // Connection msgs
@@ -66,32 +66,37 @@ app.get("/people", async (req, res) => {
 // CREATE (create route is typically in a form format where we are submitting something)
 app.post("/people", async (req, res) => {
     try {
-        // req.body is used to to submit form of new people. This returns a copy of the object that was copied in the database.
-        res.status(200).json(await People.create(req.body));
+      // send created person
+      res.json(await People.create(req.body))
     } catch (error) {
-        res.status(400).json(error) //you can implement different types of status codes.
+      //send error
+      res.status(400).json(error)
     }
-})
+  })
 
-// DELETE 
+// PEOPLE DELETE ROUTE
 app.delete("/people/:id", async (req, res) => {
     try {
-        res.status(200).json(await People.findByIdAndDelete(req.params.id));
+      // send deleted record
+      res.json(await People.findByIdAndDelete(req.params.id))
     } catch (error) {
-        res.status(400).json(error)
+      //send error
+      res.status(400).json(error)
     }
-})
-
-
-// UPDATE
-app.update("/people/:id", async (req, res) => {
+  })
+  
+  // PEOPLE UPDATE ROUTE
+  app.put("/people/:id", async (req, res) => {
     try {
-        res.status(200).json(await People.findByIdAndUpdate(req.params.id, req.body, { new: true })); //this method takes the ID and req.body updates the info
+      // send updated person
+      res.json(
+        await People.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      )
     } catch (error) {
-        res.status(400).json(error)
+      //send error
+      res.status(400).json(error)
     }
-})
-
+  })
 
 
 // Getting Data - Async Await & Try Catch 
